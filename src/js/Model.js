@@ -1,4 +1,4 @@
-class Model {
+export class Model {
   #workouts = [];
 
   addWorkout() {

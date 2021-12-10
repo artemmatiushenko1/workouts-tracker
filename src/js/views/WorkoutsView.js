@@ -1,5 +1,6 @@
-export class WorkoutSView {
-  data;
+export class WorkoutsView {
+  #workoutsContainer = document.querySelector('.');
+
   render(workouts) {
     //workouts rendering logic
   }

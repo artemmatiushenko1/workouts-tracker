@@ -5,21 +5,253 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="./src/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
     />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"
-    />
+    <link rel="stylesheet" href="./src/css/style.css" />
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
-    <script defer src="./src/js/index.js"></script>
+    <script defer type="module" src="./src/js/App.js"></script>
   </head>
   <body>
-    Hello world! Everything will be perfect!
-    <div id="map"></div>
+    <main class="app">
+      <section class="side-bar">
+        <h1 class="side-bar__heading">My activity</h1>
+        <ul class="side-bar__workouts workouts">
+          <li class="workouts__workout workout--cycling workout">
+            <div class="workout__top-wrapper">
+              <h2 class="workout__type">Cycling</h2>
+              <p class="workout__date">2021.12.10</p>
+            </div>
+            <ul class="workout__details">
+              <li class="workout__detail">
+                <!-- duration -->
+                <span class="workout__detail-icon">⏳</span>
+                <span class="workout__detail-value">24</span>
+                <span class="workout__detail-unit">min</span>
+              </li>
+              <li class="workout__detail">
+                <!-- distance -->
+                <span class="workout__detail-icon">🚴‍♀️</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">km</span>
+              </li>
+              <li class="workout__detail">
+                <!-- speed -->
+                <span class="workout__detail-icon">⚡</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">km/hr</span>
+              </li>
+              <li class="workout__detail">
+                <!-- elevation gain -->
+                <span class="workout__detail-icon">🚵‍♀️</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">m</span>
+              </li>
+            </ul>
+          </li>
+          <li class="workouts__workout workout--running workout">
+            <div class="workout__top-wrapper">
+              <h2 class="workout__type">Running</h2>
+              <p class="workout__date">2021.12.10</p>
+            </div>
+            <ul class="workout__details">
+              <li class="workout__detail" draggable="true">
+                <!-- duration -->
+                <span class="workout__detail-icon">⏳</span>
+                <span class="workout__detail-value">24</span>
+                <span class="workout__detail-unit">min</span>
+              </li>
+              <li class="workout__detail">
+                <!-- distance -->
+                <span class="workout__detail-icon">🏃‍♂️</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">km</span>
+              </li>
+              <li class="workout__detail">
+                <!-- pace -->
+                <span class="workout__detail-icon">⚡</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">km/hr</span>
+              </li>
+              <li class="workout__detail">
+                <!-- cadence -->
+                <span class="workout__detail-icon">🦶🏼</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">spm</span>
+              </li>
+            </ul>
+          </li>
+          <li class="workouts__workout workout--running workout">
+            <div class="workout__top-wrapper">
+              <h2 class="workout__type">Running</h2>
+              <p class="workout__date">2021.12.10</p>
+            </div>
+            <ul class="workout__details">
+              <li class="workout__detail" draggable="true">
+                <!-- duration -->
+                <span class="workout__detail-icon">⏳</span>
+                <span class="workout__detail-value">24</span>
+                <span class="workout__detail-unit">min</span>
+              </li>
+              <li class="workout__detail">
+                <!-- distance -->
+                <span class="workout__detail-icon">🏃‍♂️</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">km</span>
+              </li>
+              <li class="workout__detail">
+                <!-- pace -->
+                <span class="workout__detail-icon">⚡</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">km/hr</span>
+              </li>
+              <li class="workout__detail">
+                <!-- cadence -->
+                <span class="workout__detail-icon">🦶🏼</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">spm</span>
+              </li>
+            </ul>
+          </li>
+          <li class="workouts__workout workout--running workout">
+            <div class="workout__top-wrapper">
+              <h2 class="workout__type">Running</h2>
+              <p class="workout__date">2021.12.10</p>
+            </div>
+            <ul class="workout__details">
+              <li class="workout__detail" draggable="true">
+                <!-- duration -->
+                <span class="workout__detail-icon">⏳</span>
+                <span class="workout__detail-value">24</span>
+                <span class="workout__detail-unit">min</span>
+              </li>
+              <li class="workout__detail">
+                <!-- distance -->
+                <span class="workout__detail-icon">🏃‍♂️</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">km</span>
+              </li>
+              <li class="workout__detail">
+                <!-- pace -->
+                <span class="workout__detail-icon">⚡</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">km/hr</span>
+              </li>
+              <li class="workout__detail">
+                <!-- cadence -->
+                <span class="workout__detail-icon">🦶🏼</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">spm</span>
+              </li>
+            </ul>
+          </li>
+          <li class="workouts__workout workout--running workout">
+            <div class="workout__top-wrapper">
+              <h2 class="workout__type">Running</h2>
+              <p class="workout__date">2021.12.10</p>
+            </div>
+            <ul class="workout__details">
+              <li class="workout__detail" draggable="true">
+                <!-- duration -->
+                <span class="workout__detail-icon">⏳</span>
+                <span class="workout__detail-value">24</span>
+                <span class="workout__detail-unit">min</span>
+              </li>
+              <li class="workout__detail">
+                <!-- distance -->
+                <span class="workout__detail-icon">🏃‍♂️</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">km</span>
+              </li>
+              <li class="workout__detail">
+                <!-- pace -->
+                <span class="workout__detail-icon">⚡</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">km/hr</span>
+              </li>
+              <li class="workout__detail">
+                <!-- cadence -->
+                <span class="workout__detail-icon">🦶🏼</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">spm</span>
+              </li>
+            </ul>
+          </li>
+          <li class="workouts__workout workout--running workout">
+            <div class="workout__top-wrapper">
+              <h2 class="workout__type">Running</h2>
+              <p class="workout__date">2021.12.10</p>
+            </div>
+            <ul class="workout__details">
+              <li class="workout__detail" draggable="true">
+                <!-- duration -->
+                <span class="workout__detail-icon">⏳</span>
+                <span class="workout__detail-value">24</span>
+                <span class="workout__detail-unit">min</span>
+              </li>
+              <li class="workout__detail">
+                <!-- distance -->
+                <span class="workout__detail-icon">🏃‍♂️</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">km</span>
+              </li>
+              <li class="workout__detail">
+                <!-- pace -->
+                <span class="workout__detail-icon">⚡</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">km/hr</span>
+              </li>
+              <li class="workout__detail">
+                <!-- cadence -->
+                <span class="workout__detail-icon">🦶🏼</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">spm</span>
+              </li>
+            </ul>
+          </li>
+          <li class="workouts__workout workout--running workout">
+            <div class="workout__top-wrapper">
+              <h2 class="workout__type">Running</h2>
+              <p class="workout__date">2021.12.10</p>
+            </div>
+            <ul class="workout__details">
+              <li class="workout__detail" draggable="true">
+                <!-- duration -->
+                <span class="workout__detail-icon">⏳</span>
+                <span class="workout__detail-value">24</span>
+                <span class="workout__detail-unit">min</span>
+              </li>
+              <li class="workout__detail">
+                <!-- distance -->
+                <span class="workout__detail-icon">🏃‍♂️</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">km</span>
+              </li>
+              <li class="workout__detail">
+                <!-- pace -->
+                <span class="workout__detail-icon">⚡</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">km/hr</span>
+              </li>
+              <li class="workout__detail">
+                <!-- cadence -->
+                <span class="workout__detail-icon">🦶🏼</span>
+                <span class="workout__detail-value">3</span>
+                <span class="workout__detail-unit">spm</span>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+      <div id="map"></div>
+    </main>
   </body>
 </html>
