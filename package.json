@@ -4,13 +4,8 @@
   "description": "App for tracking activity on a map",
   "main": "index.html",
   "scripts": {
-    "watch:sass": "node-sass ./src/sass/main.scss ./src/css/style.css -w",
     "devserver": "live-server",
-    "start": "npm-run-all --parallel devserver watch:sass",
-    "compile:sass": "node-sass ./src/sass/main.scss ./src/css/style.comp.css",
-    "prefix:css": "postcss --use autoprefixer -b \"last 10 versions\" ./src/css/style.comp.css -o ./src/css/style.prefix.css",
-    "compress:css": "node-sass ./src/css/style.prefix.css ./src/css/style.css --output-style compressed",
-    "build:css": "npm-run-all compile:sass prefix:css compress:css",
+    "start": "npm-run-all --parallel devserver",
     "lint": "eslint ./src/js",
     "lint:fix": "eslint ./src/js --fix"
   },

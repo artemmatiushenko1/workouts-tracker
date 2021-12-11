@@ -1,14 +1,14 @@
 export class Workout {
-  #date = new Date();
-  #id = Date.now().toString();
+  date = new Date();
+  id = (Date.now() + '').slice(-10);
 
   constructor(distance, duration, coords) {
-    this.distance = distance;
-    this.duration = duration;
-    this.coords = coords;
+    this.distance = distance; //in km
+    this.duration = duration; //in min
+    this.coords = coords; // an array [latitude, longtitue]
   }
 
-  setDesctiption() {
+  setDesciption() {
     const months = [
       'January',
       'February',
@@ -23,29 +23,8 @@ export class Workout {
       'November',
       'December',
     ];
-
     this.description = `${this.type[0].toUpperCase() + this.type.slice(1)} on ${
-      months[this.#date.getMonth()]
-    } ${this.#date.getDate()}`;
-  }
-
-  getId() {
-    return this.#id;
-  }
-
-  getDate() {
-    return this.#date;
-  }
-
-  getDistance() {
-    return this.distance;
-  }
-
-  getDuration() {
-    return this.duration;
-  }
-
-  getCoords() {
-    return this.coords;
+      months[this.date.getMonth()]
+    } ${this.date.getDate()}`;
   }
 }

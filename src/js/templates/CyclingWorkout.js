@@ -1,16 +1,17 @@
-import { Workout } from './Workout';
+import { Workout } from './Workout.js';
 
 export class CyclingWorkout extends Workout {
   type = 'cycling';
-
-  constructor(distance, duration, coords, elevationGain) {
+  constructor(coords, distance, duration, elevationGain) {
     super(distance, duration, coords);
     this.elevationGain = elevationGain;
-    this.setDesctiption();
-    this.#calcSpeed();
+    this.calcSpeed();
+    this.setDesciption();
   }
 
-  #calcSpeed() {
-    this.speed = this.getDistance() / this.getDuration();
+  calcSpeed() {
+    //km/h
+    this.speed = this.distance / (this.duration / 60);
+    return this.speed;
   }
 }
