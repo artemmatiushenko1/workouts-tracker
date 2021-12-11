@@ -17,11 +17,50 @@
     margin-bottom: 2rem;
   }
 
+  .form {
+    width: 100%;
+    border: 1px solid rgba(#333, 0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    transition: all 0.5s, transform 1ms;
+
+    &__label {
+      display: inline-block;
+      font-family: inherit;
+      font-weight: 500;
+      font-size: 1.4rem;
+      color: rgba(#333, 0.5);
+      margin-bottom: 0.7rem;
+    }
+
+    &__input {
+      outline: none;
+      border: none;
+      background-color: rgba(#333, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-family: inherit;
+      transition: background-color 0.2s ease;
+
+      &:focus {
+        background-color: rgba(#333, 0.05);
+      }
+    }
+
+    #workout-type {
+      display: block;
+    }
+  }
+
   &__workouts {
     list-style: none;
     width: 100%;
-    display: grid;
+    display: flex;
     row-gap: 1.5rem;
+    flex-direction: column;
     height: 80vh;
     padding: 5px;
     overflow-y: scroll;
@@ -122,4 +161,16 @@
       }
     }
   }
+}
+
+.form__item--hidden {
+  display: none;
+}
+
+.form.hidden {
+  transform: translateY(-30rem);
+  height: 0;
+  padding: 0 2.25rem;
+  margin-bottom: 0;
+  opacity: 0;
 }
