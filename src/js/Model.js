@@ -1,8 +1,28 @@
+import { CyclingWorkout } from './templates/CyclingWorkout.js';
+import { RunningWorkout } from './templates/RunningWorkout.js';
+
 export class Model {
   #workouts = [];
 
-  addWorkout() {
-    //add workout logiv
+  addWorkout(workoutData) {
+    const { coords, distance, duration, elevation, cadence } = workoutData;
+    let newWorkout;
+
+    if (workoutData.type === 'running') {
+      newWorkout = new RunningWorkout(coords, distance, duration, cadence);
+    }
+
+    if (workoutData.type === 'cycling') {
+      newWorkout = new CyclingWorkout(coords, distance, duration, elevation);
+    }
+
+    this.#workouts.push(newWorkout);
+    this.#setLocalStorage();
+    return newWorkout;
+  }
+
+  findWorkoutById(id) {
+    return this.#workouts.find((workout) => workout.id === id);
   }
 
   deleteWorkout() {
@@ -13,19 +33,7 @@ export class Model {
     return this.#workouts;
   }
 
-  // _setLocalStorage() {
-  //   localStorage.setItem('workouts', JSON.stringify(this.#workouts));
-  // }
-
-  // _getLocalStorage() {
-  //   const data = JSON.parse(localStorage.getItem('workouts'));
-  //   console.log(data);
-
-  //   if (!data) return;
-  //   workouts = data;
-
-  //   workouts.forEach((workout) => {
-  //     this._renderWokout(workout);
-  //   });
-  // }
+  #setLocalStorage() {
+    localStorage.setItem('workouts', JSON.stringify(this.#workouts));
+  }
 }

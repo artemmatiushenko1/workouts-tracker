@@ -1,15 +1,79 @@
-export class WorkoutsView {
-  #workoutsContainer = document.querySelector('.form');
+class WorkoutsView {
+  #form = document.querySelector('.form');
+  #workoutsContainer = document.querySelector('.workouts');
+  #inputType = document.querySelector('.form__input--type');
+  #inputDistance = document.querySelector('.form__input--distance');
+  #inputDuration = document.querySelector('.form__input--duration');
+  #inputCadence = document.querySelector('.form__input--cadence');
+  #inputElevation = document.querySelector('.form__input--elevation');
+  #mapEvent;
+
+  constructor() {
+    this.bindInputTypeChangeHandler(this.onInputTypeChanged.bind(this));
+  }
+
+  showForm(mapEvent) {
+    this.#form.classList.remove('hidden');
+    this.#inputDistance.focus();
+    this.#mapEvent = mapEvent;
+    console.log(mapEvent);
+  }
+
+  hideForm() {
+    this.#inputDistance.value =
+      this.#inputCadence.value =
+      this.#inputDuration.value =
+      this.#inputElevation.value =
+        '';
+    this.#form.style.display = 'none';
+    this.#form.classList.add('hidden');
+
+    setTimeout(() => (this.#form.style.display = 'grid'), 1000);
+  }
+
+  getFormValues() {
+    return {
+      type: this.#inputType.value,
+      distance: parseInt(this.#inputDistance.value),
+      duration: parseInt(this.#inputDuration.value),
+      coords: [this.#mapEvent.latlng.lat, this.#mapEvent.latlng.lng],
+      cadence: parseInt(this.#inputCadence.value),
+      elevation: parseInt(this.#inputElevation.value),
+    };
+  }
+
+  bindInputTypeChangeHandler(handler) {
+    this.#inputType.addEventListener('change', handler);
+  }
+
+  onInputTypeChanged() {
+    this.#inputElevation
+      .closest('.form__row')
+      .classList.toggle('form__row--hidden');
+    this.#inputCadence
+      .closest('.form__row')
+      .classList.toggle('form__row--hidden');
+  }
 
   renderWorkout(workout) {
     const html = this.createWorkoutTemplate(workout);
-    this.#workoutsContainer.insertAdjacentHTML('afterend', html);
+    this.#form.insertAdjacentHTML('afterend', html);
   }
 
   bindOnWorkoutClickHandler(handler) {
     this.#workoutsContainer.addEventListener('click', (e) => {
-      // logic from _moveToPopup(e)
-      handler();
+      const workoutEl = e.target.closest('.workout');
+      if (!workoutEl) return;
+      const workoutId = workoutEl.dataset['id'];
+      console.log(workoutId);
+      handler(workoutId);
+    });
+  }
+
+  binOnFormSubmitHandler(handler) {
+    this.#form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handler(this.getFormValues());
     });
   }
 
@@ -57,3 +121,5 @@ export class WorkoutsView {
       }`;
   }
 }
+
+export default new WorkoutsView();
