@@ -5,27 +5,17 @@ import { Model } from './Model.js';
 class Controller {
   model;
 
-  constructor(model) {
-    this.model = model;
-    this.getPosition();
-    WorkoutsView.binOnFormSubmitHandler((data) => {
-      this.onFormSubmitHandler(data);
+  constructor() {
+    this.model = new Model();
+    this.model.getPosition(this.onGetLocationFail).then((position) => {
+      MapView.loadMap(position, this.onMapClickHandler);
+      MapView.bindOnMapClickHandler(this.onMapClickHandler);
+      this.initSavedWorkouts();
     });
-    WorkoutsView.bindOnWorkoutClickHandler((workoutId) => {
-      this.onWorkoutClickHandler(workoutId);
-    });
-  }
-
-  getPosition() {
-    const fail = function () {
-      alert('Please give a permission to access your location');
-    };
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        MapView.loadMap(position, this.onMapClickHandler);
-      }, fail);
-    }
+    WorkoutsView.binOnFormSubmitHandler(this.onFormSubmitHandler.bind(this));
+    WorkoutsView.bindOnWorkoutClickHandler(
+      this.onWorkoutClickHandler.bind(this)
+    );
   }
 
   onMapClickHandler(mapEvent) {
@@ -33,8 +23,8 @@ class Controller {
   }
 
   onFormSubmitHandler(data) {
-    WorkoutsView.hideForm();
     const workout = this.model.addWorkout(data);
+    WorkoutsView.hideForm();
     WorkoutsView.renderWorkout(workout);
     MapView.renderWorkoutMarker(workout);
   }
@@ -43,7 +33,18 @@ class Controller {
     const workout = this.model.findWorkoutById(workoutId);
     MapView.moveToWorkout(workout);
   }
+
+  initSavedWorkouts() {
+    const workouts = this.model.getWorkouts();
+    workouts.forEach((workout) => {
+      WorkoutsView.renderWorkout(workout);
+      MapView.renderWorkoutMarker(workout);
+    });
+  }
+
+  onGetLocationFail(e) {
+    console.log('You should turn on location ' + e);
+  }
 }
 
-const model = new Model();
-const controller = new Controller(model);
+const controller = new Controller();

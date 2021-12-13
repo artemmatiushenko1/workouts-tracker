@@ -16,7 +16,6 @@ class WorkoutsView {
     this.#form.classList.remove('hidden');
     this.#inputDistance.focus();
     this.#mapEvent = mapEvent;
-    console.log(mapEvent);
   }
 
   hideForm() {
@@ -38,7 +37,7 @@ class WorkoutsView {
       duration: parseInt(this.#inputDuration.value),
       coords: [this.#mapEvent.latlng.lat, this.#mapEvent.latlng.lng],
       cadence: parseInt(this.#inputCadence.value),
-      elevation: parseInt(this.#inputElevation.value),
+      elevationGain: parseInt(this.#inputElevation.value),
     };
   }
 
@@ -65,7 +64,6 @@ class WorkoutsView {
       const workoutEl = e.target.closest('.workout');
       if (!workoutEl) return;
       const workoutId = workoutEl.dataset['id'];
-      console.log(workoutId);
       handler(workoutId);
     });
   }

@@ -2,10 +2,10 @@ export class Workout {
   date = new Date();
   id = (Date.now() + '').slice(-10);
 
-  constructor(distance, duration, coords) {
-    this.distance = distance; //in km
-    this.duration = duration; //in min
-    this.coords = coords; // an array [latitude, longtitue]
+  constructor(props) {
+    this.distance = props.distance;
+    this.duration = props.duration;
+    this.coords = props.coords;
   }
 
   setDesciption() {

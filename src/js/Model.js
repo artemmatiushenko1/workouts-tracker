@@ -1,24 +1,34 @@
-import { CyclingWorkout } from './templates/CyclingWorkout.js';
-import { RunningWorkout } from './templates/RunningWorkout.js';
+import WorkoutManager from './templates/WorkoutManager.js';
 
 export class Model {
   #workouts = [];
 
+  constructor() {
+    this.#getLocalStorage();
+  }
+
   addWorkout(workoutData) {
-    const { coords, distance, duration, elevation, cadence } = workoutData;
-    let newWorkout;
-
-    if (workoutData.type === 'running') {
-      newWorkout = new RunningWorkout(coords, distance, duration, cadence);
-    }
-
-    if (workoutData.type === 'cycling') {
-      newWorkout = new CyclingWorkout(coords, distance, duration, elevation);
-    }
-
+    const newWorkout = WorkoutManager.createWorkout(workoutData);
     this.#workouts.push(newWorkout);
     this.#setLocalStorage();
     return newWorkout;
+  }
+
+  async getPosition(onFail) {
+    try {
+      const position = await this.#getLocationPromise();
+      return position;
+    } catch (e) {
+      onFail(e.message);
+    }
+  }
+
+  #getLocationPromise() {
+    if (navigator.geolocation) {
+      return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
+    }
   }
 
   findWorkoutById(id) {
@@ -35,5 +45,11 @@ export class Model {
 
   #setLocalStorage() {
     localStorage.setItem('workouts', JSON.stringify(this.#workouts));
+  }
+
+  #getLocalStorage() {
+    const data = JSON.parse(localStorage.getItem('workouts'));
+    if (!data) return;
+    this.#workouts = data;
   }
 }

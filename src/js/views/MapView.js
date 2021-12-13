@@ -1,16 +1,18 @@
 class MapView {
   map;
 
-  loadMap(position, onMapClickHandler) {
+  loadMap(position) {
     const { latitude, longitude } = position.coords;
-    this.map = L.map('map').setView([latitude, longitude], 13);
+    this.map = new L.Map('map').setView([latitude, longitude], 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map);
+  }
 
-    this.map.on('click', onMapClickHandler);
+  bindOnMapClickHandler(handler) {
+    this.map.on('click', handler);
   }
 
   renderWorkoutMarker({ coords, type, description }) {
