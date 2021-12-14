@@ -7,11 +7,11 @@ class Controller {
 
   constructor() {
     this.model = new Model();
-    this.model.getPosition(this.onGetLocationFail).then((position) => {
+    this.model.getPosition().then((position) => {
       MapView.loadMap(position, this.onMapClickHandler);
       MapView.bindOnMapClickHandler(this.onMapClickHandler);
       this.initSavedWorkouts();
-    });
+    }, this.onGetLocationFail);
     WorkoutsView.binOnFormSubmitHandler(this.onFormSubmitHandler.bind(this));
     WorkoutsView.bindOnWorkoutClickHandler(
       this.onWorkoutClickHandler.bind(this)
@@ -43,7 +43,7 @@ class Controller {
   }
 
   onGetLocationFail(e) {
-    console.log('You should turn on location ' + e);
+    console.log('You should turn on location ' + e.message);
   }
 }
 

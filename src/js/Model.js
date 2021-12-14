@@ -14,20 +14,16 @@ export class Model {
     return newWorkout;
   }
 
-  async getPosition(onFail) {
+  async getPosition() {
     try {
-      const position = await this.#getLocationPromise();
-      return position;
+      if (navigator.geolocation) {
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+        return position;
+      }
     } catch (e) {
-      onFail(e.message);
-    }
-  }
-
-  #getLocationPromise() {
-    if (navigator.geolocation) {
-      return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject);
-      });
+      throw new Error(e.message);
     }
   }
 
