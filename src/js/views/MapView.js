@@ -1,24 +1,24 @@
 class MapView {
-  map;
+  #map;
 
   loadMap(position) {
     const { latitude, longitude } = position.coords;
-    this.map = new L.Map('map').setView([latitude, longitude], 13);
+    this.#map = new L.Map('map').setView([latitude, longitude], 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(this.map);
+    }).addTo(this.#map);
   }
 
   bindOnMapClickHandler(handler) {
-    this.map.on('click', handler);
+    this.#map.on('click', handler);
   }
 
   renderWorkoutMarker({ coords, type, description }) {
     const marker = L.marker(coords);
     marker
-      .addTo(this.map)
+      .addTo(this.#map)
       .bindPopup(
         L.popup({
           maxWidth: 250,
@@ -33,7 +33,7 @@ class MapView {
   }
 
   moveToWorkout(workout) {
-    this.map.setView(workout.coords, 13, {
+    this.#map.setView(workout.coords, 13, {
       animate: true,
       pan: {
         duration: 1,

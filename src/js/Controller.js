@@ -12,6 +12,7 @@ class Controller {
       MapView.bindOnMapClickHandler(this.onMapClickHandler);
       this.initSavedWorkouts();
     }, this.onGetLocationFail);
+    WorkoutsView.setTotalWorkoutsValue(this.model.workoutsCount);
     WorkoutsView.binOnFormSubmitHandler(this.onFormSubmitHandler.bind(this));
     WorkoutsView.bindOnWorkoutClickHandler(
       this.onWorkoutClickHandler.bind(this)
@@ -26,6 +27,7 @@ class Controller {
     const workout = this.model.addWorkout(data);
     WorkoutsView.hideForm();
     WorkoutsView.renderWorkout(workout);
+    WorkoutsView.setTotalWorkoutsValue(this.model.workoutsCount);
     MapView.renderWorkoutMarker(workout);
   }
 
@@ -35,7 +37,7 @@ class Controller {
   }
 
   initSavedWorkouts() {
-    const workouts = this.model.getWorkouts();
+    const workouts = this.model.workouts;
     workouts.forEach((workout) => {
       WorkoutsView.renderWorkout(workout);
       MapView.renderWorkoutMarker(workout);

@@ -35,8 +35,12 @@ export class Model {
     //delete workout logic
   }
 
-  getWorkouts() {
+  get workouts() {
     return this.#workouts;
+  }
+
+  get workoutsCount() {
+    return this.#workouts.length;
   }
 
   #setLocalStorage() {

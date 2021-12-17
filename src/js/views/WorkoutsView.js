@@ -6,10 +6,15 @@ class WorkoutsView {
   #inputDuration = document.querySelector('.form__input--duration');
   #inputCadence = document.querySelector('.form__input--cadence');
   #inputElevation = document.querySelector('.form__input--elevation');
+  #totalWorkoutsEl = document.querySelector('.total-workouts-value');
   #mapEvent;
 
   constructor() {
     this.bindInputTypeChangeHandler(this.onInputTypeChanged.bind(this));
+  }
+
+  setTotalWorkoutsValue(value) {
+    this.#totalWorkoutsEl.textContent = value;
   }
 
   showForm(mapEvent) {
@@ -92,8 +97,8 @@ class WorkoutsView {
         <span class="workout__unit">min</span>
       </div>
       ${
-        workout.type === 'running'
-          ? `<div class="workout__details">
+  workout.type === 'running' ?
+    `<div class="workout__details">
         <span class="workout__icon">⚡️</span>
         <span class="workout__value">${workout.pace.toFixed(1)}</span>
         <span class="workout__unit">min/km</span>
@@ -103,8 +108,8 @@ class WorkoutsView {
         <span class="workout__value">${workout.cadence}</span>
         <span class="workout__unit">spm</span>
       </div>
-      </li>`
-          : `
+      </li>` :
+    `
         <div class="workout__details">
         <span class="workout__icon">⚡️</span>
         <span class="workout__value">${workout.speed.toFixed(1)}</span>
@@ -116,7 +121,7 @@ class WorkoutsView {
         <span class="workout__unit">m</span>
       </div>
     </li>`
-      }`;
+}`;
   }
 }
 
