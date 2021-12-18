@@ -8,7 +8,7 @@ export class WorkoutManager {
   };
 
   createWorkout(props) {
-    return new this.workoutTypes[props.type](props);
+    return new this.workoutTypes[props.type](props.values);
   }
 }
 

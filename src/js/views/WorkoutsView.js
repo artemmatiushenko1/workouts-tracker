@@ -1,3 +1,5 @@
+import AlertView from './AlertView.js';
+
 class WorkoutsView {
   #form = document.querySelector('.form');
   #workoutsContainer = document.querySelector('.workouts');
@@ -7,10 +9,11 @@ class WorkoutsView {
   #inputCadence = document.querySelector('.form__input--cadence');
   #inputElevation = document.querySelector('.form__input--elevation');
   #totalWorkoutsEl = document.querySelector('.total-workouts-value');
+  #currentWorkoutType = 'running';
   #mapEvent;
 
   constructor() {
-    this.bindInputTypeChangeHandler(this.onInputTypeChanged.bind(this));
+    this.#bindInputTypeChangeHandler(this.#onInputTypeChanged.bind(this));
   }
 
   setTotalWorkoutsValue(value) {
@@ -38,19 +41,34 @@ class WorkoutsView {
   getFormValues() {
     return {
       type: this.#inputType.value,
-      distance: parseInt(this.#inputDistance.value),
-      duration: parseInt(this.#inputDuration.value),
-      coords: [this.#mapEvent.latlng.lat, this.#mapEvent.latlng.lng],
-      cadence: parseInt(this.#inputCadence.value),
-      elevationGain: parseInt(this.#inputElevation.value),
+      values: {
+        distance: parseInt(this.#inputDistance.value),
+        duration: parseInt(this.#inputDuration.value),
+        coords: [this.#mapEvent.latlng.lat, this.#mapEvent.latlng.lng],
+        [this.#currentWorkoutType === 'running' ? 'cadence' : 'elevationGain']:
+          this.#currentWorkoutType === 'running' ?
+            parseInt(this.#inputCadence.value) :
+            parseInt(this.#inputElevation.value),
+      },
     };
   }
 
-  bindInputTypeChangeHandler(handler) {
+  #isValidFormInputs(...inputs) {
+    return inputs
+      .filter((input) => typeof input !== 'object')
+      .every((input) => {
+        if (typeof input !== 'object') {
+          return Number.isFinite(input) && input > 0;
+        }
+      });
+  }
+
+  #bindInputTypeChangeHandler(handler) {
     this.#inputType.addEventListener('change', handler);
   }
 
-  onInputTypeChanged() {
+  #onInputTypeChanged() {
+    this.#currentWorkoutType = this.#inputType.value;
     this.#inputElevation
       .closest('.form__row')
       .classList.toggle('form__row--hidden');
@@ -76,6 +94,11 @@ class WorkoutsView {
   binOnFormSubmitHandler(handler) {
     this.#form.addEventListener('submit', (e) => {
       e.preventDefault();
+      const inputs = Object.values(this.getFormValues().values);
+      if (!this.#isValidFormInputs(...inputs)) {
+        AlertView.show();
+        return;
+      }
       handler(this.getFormValues());
     });
   }
