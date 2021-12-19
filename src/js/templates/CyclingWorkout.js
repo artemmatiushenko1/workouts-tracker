@@ -6,11 +6,11 @@ export class CyclingWorkout extends Workout {
   constructor(props) {
     super(props);
     this.elevationGain = props.elevationGain;
-    this.calcSpeed();
+    this.#calcSpeed();
     this.setDesciption();
   }
 
-  calcSpeed() {
+  #calcSpeed() {
     this.speed = this.distance / (this.duration / 60);
     return this.speed;
   }

@@ -2,13 +2,13 @@ import { CyclingWorkout } from './CyclingWorkout.js';
 import { RunningWorkout } from './RunningWorkout.js';
 
 export class WorkoutManager {
-  workoutTypes = {
+  #workoutTypes = {
     cycling: CyclingWorkout,
     running: RunningWorkout,
   };
 
   createWorkout(props) {
-    return new this.workoutTypes[props.type](props.values);
+    return new this.#workoutTypes[props.type](props.values);
   }
 }
 

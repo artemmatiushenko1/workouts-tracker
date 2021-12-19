@@ -6,11 +6,11 @@ export class RunningWorkout extends Workout {
   constructor(props) {
     super(props);
     this.cadence = props.cadence;
-    this.calcPace();
+    this.#calcPace();
     this.setDesciption();
   }
 
-  calcPace() {
+  #calcPace() {
     this.pace = this.duration / this.distance;
     return this.pace;
   }
