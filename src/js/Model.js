@@ -31,8 +31,10 @@ export class Model {
     return this.#workouts.find((workout) => workout.id === id);
   }
 
-  deleteWorkout() {
-    //delete workout logic
+  deleteWorkoutById(id) {
+    const indexToDelete = this.#workouts.findIndex((value) => value.id === id);
+    this.#workouts.splice(indexToDelete, 1);
+    this.#setLocalStorage();
   }
 
   get workouts() {

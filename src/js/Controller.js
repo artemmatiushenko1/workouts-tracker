@@ -17,6 +17,9 @@ class Controller {
     WorkoutsView.bindOnWorkoutClickHandler(
       this.onWorkoutClickHandler.bind(this)
     );
+    WorkoutsView.bindOnWorkoutDeleteHandler(
+      this.onWorkoutDeleteHandler.bind(this)
+    );
   }
 
   onMapClickHandler(mapEvent) {
@@ -34,6 +37,12 @@ class Controller {
   onWorkoutClickHandler(workoutId) {
     const workout = this.model.findWorkoutById(workoutId);
     MapView.moveToWorkout(workout);
+  }
+
+  onWorkoutDeleteHandler(idToDelete) {
+    this.model.deleteWorkoutById(idToDelete);
+    WorkoutsView.setTotalWorkoutsValue(this.model.workoutsCount);
+    MapView.removeMarker(idToDelete);
   }
 
   initSavedWorkouts() {

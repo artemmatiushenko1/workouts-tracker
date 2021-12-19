@@ -84,7 +84,7 @@ a:visited {
 .workout__title {
   font-size: 1.7rem;
   font-weight: 600;
-  grid-column: 1 / -1;
+  grid-column: 1 / 4;
 }
 
 .workout__details {
@@ -201,7 +201,6 @@ a:visited {
   margin-bottom: 1rem;
 }
 
-/*--------ALERT--------*/
 .alert {
   visibility: visible;
   opacity: 1;
@@ -221,17 +220,25 @@ a:visited {
   opacity: 0;
 }
 
-.closebtn {
-  margin-left: 15px;
-  color: white;
-  font-weight: bold;
-  float: right;
-  font-size: 22px;
-  line-height: 20px;
+.workout__delete-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+  font-size: 1.5rem;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.closebtn:hover {
-  color: black;
+.workout__delete-btn:hover {
+  background-color: var(--color-dark--1);
+}
+
+.workout__delete-btn:active {
+  transform: scale(0.9);
 }

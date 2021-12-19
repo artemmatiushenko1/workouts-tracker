@@ -1,5 +1,6 @@
 class MapView {
   #map;
+  #markers = [];
 
   loadMap(position) {
     const { latitude, longitude } = position.coords;
@@ -15,8 +16,9 @@ class MapView {
     this.#map.on('click', handler);
   }
 
-  renderWorkoutMarker({ coords, type, description }) {
+  renderWorkoutMarker({ coords, type, description, id }) {
     const marker = L.marker(coords);
+    marker.id = id;
     marker
       .addTo(this.#map)
       .bindPopup(
@@ -30,6 +32,13 @@ class MapView {
       )
       .setPopupContent(`${type === 'running' ? '🏃‍♂️' : '🚴‍♂️'} ${description}`)
       .openPopup();
+    this.#markers.push(marker);
+  }
+
+  removeMarker(id) {
+    const indexToRemove = this.#markers.findIndex((marker) => marker.id === id);
+    const markerToRemove = this.#markers[indexToRemove];
+    this.#map.removeLayer(markerToRemove);
   }
 
   moveToWorkout(workout) {

@@ -46,9 +46,9 @@ class WorkoutsView {
         duration: parseInt(this.#inputDuration.value),
         coords: [this.#mapEvent.latlng.lat, this.#mapEvent.latlng.lng],
         [this.#currentWorkoutType === 'running' ? 'cadence' : 'elevationGain']:
-          this.#currentWorkoutType === 'running' ?
-            parseInt(this.#inputCadence.value) :
-            parseInt(this.#inputElevation.value),
+          this.#currentWorkoutType === 'running'
+            ? parseInt(this.#inputCadence.value)
+            : parseInt(this.#inputElevation.value),
       },
     };
   }
@@ -85,9 +85,20 @@ class WorkoutsView {
   bindOnWorkoutClickHandler(handler) {
     this.#workoutsContainer.addEventListener('click', (e) => {
       const workoutEl = e.target.closest('.workout');
-      if (!workoutEl) return;
+      if (!workoutEl || e.target.closest('.workout__delete-btn')) return;
       const workoutId = workoutEl.dataset['id'];
       handler(workoutId);
+    });
+  }
+
+  bindOnWorkoutDeleteHandler(handler) {
+    this.#workoutsContainer.addEventListener('click', (e) => {
+      const btnDelete = e.target.closest('.workout__delete-btn');
+      if (!btnDelete) return;
+      const workoutEl = e.target.closest('.workout');
+      const idToDelete = workoutEl.dataset['id'];
+      this.#workoutsContainer.removeChild(workoutEl);
+      handler(idToDelete);
     });
   }
 
@@ -107,6 +118,9 @@ class WorkoutsView {
     return `
     <li class="workout workout--${workout.type}" data-id="${workout.id}">
       <h2 class="workout__title">${workout.description}</h2>
+      <button class="workout__delete-btn">
+        <i class="fas fa-trash-alt"></i>
+      </button>
       <div class="workout__details">
         <span class="workout__icon">
         ${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♂️'}
@@ -120,8 +134,8 @@ class WorkoutsView {
         <span class="workout__unit">min</span>
       </div>
       ${
-  workout.type === 'running' ?
-    `<div class="workout__details">
+        workout.type === 'running'
+          ? `<div class="workout__details">
         <span class="workout__icon">⚡️</span>
         <span class="workout__value">${workout.pace.toFixed(1)}</span>
         <span class="workout__unit">min/km</span>
@@ -131,8 +145,8 @@ class WorkoutsView {
         <span class="workout__value">${workout.cadence}</span>
         <span class="workout__unit">spm</span>
       </div>
-      </li>` :
-    `
+      </li>`
+          : `
         <div class="workout__details">
         <span class="workout__icon">⚡️</span>
         <span class="workout__value">${workout.speed.toFixed(1)}</span>
@@ -144,7 +158,7 @@ class WorkoutsView {
         <span class="workout__unit">m</span>
       </div>
     </li>`
-}`;
+      }`;
   }
 }
 
