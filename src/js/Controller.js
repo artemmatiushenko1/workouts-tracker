@@ -1,5 +1,7 @@
 import MapView from './views/MapView.js';
 import WorkoutsView from './views/WorkoutsView.js';
+import AlertView from './views/AlertView.js';
+import { AlertView as AlertViewClass } from './views/AlertView.js';
 import { Model } from './Model.js';
 
 class Controller {
@@ -53,8 +55,11 @@ class Controller {
     });
   }
 
-  onGetLocationFail(e) {
-    console.log('You should turn on location ' + e.message);
+  onGetLocationFail() {
+    AlertView.show(
+      'You should turn on location in order to have the app working',
+      AlertViewClass.DURATION_LONG
+    );
   }
 }
 
