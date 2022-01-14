@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import MapView from './views/MapView.js';
 import WorkoutsView from './views/WorkoutsView.js';
 import AlertView from './views/AlertView.js';

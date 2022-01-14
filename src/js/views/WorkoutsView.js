@@ -11,10 +11,15 @@ class WorkoutsView {
   #inputElevation = document.querySelector('.form__input--elevation');
   #totalWorkoutsEl = document.querySelector('.total-workouts-value');
   #currentWorkoutType = 'running';
+  #typeDependentInputs = new Map([
+    ['running', { name: 'cadence', input: this.#inputCadence }],
+    ['cycling', { name: 'elevationGain', input: this.#inputElevation }],
+  ]);
   #mapEvent;
 
   constructor() {
     this.#bindInputTypeChangeHandler(this.#onInputTypeChanged.bind(this));
+    console.log(this.#typeDependentInputs);
   }
 
   setTotalWorkoutsValue(value) {
@@ -40,16 +45,17 @@ class WorkoutsView {
   }
 
   getFormValues() {
+    const typeDependentInput = this.#typeDependentInputs.get(
+      this.#currentWorkoutType
+    );
+
     return {
       type: this.#inputType.value,
       values: {
         distance: parseInt(this.#inputDistance.value),
         duration: parseInt(this.#inputDuration.value),
         coords: [this.#mapEvent.latlng.lat, this.#mapEvent.latlng.lng],
-        [this.#currentWorkoutType === 'running' ? 'cadence' : 'elevationGain']:
-          this.#currentWorkoutType === 'running'
-            ? parseInt(this.#inputCadence.value)
-            : parseInt(this.#inputElevation.value),
+        [typeDependentInput.name]: parseInt(typeDependentInput.input.value),
       },
     };
   }
