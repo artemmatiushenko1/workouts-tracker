@@ -9,7 +9,6 @@ export class Model {
 
   addWorkout(workoutData) {
     const newWorkout = WorkoutManager.createWorkout(workoutData);
-    console.log(workoutData);
     this.#workouts.push(newWorkout);
     this.#setLocalStorage();
     return newWorkout;

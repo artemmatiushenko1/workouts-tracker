@@ -7,19 +7,19 @@ class WorkoutsView {
   #inputType = document.querySelector('.form__input--type');
   #inputDistance = document.querySelector('.form__input--distance');
   #inputDuration = document.querySelector('.form__input--duration');
-  #inputCadence = document.querySelector('.form__input--cadence');
-  #inputElevation = document.querySelector('.form__input--elevation');
+  #changableInput = document.querySelector('.form__input--changable');
+  #changableInputLabel = document.querySelector('.form__label--changable');
   #totalWorkoutsEl = document.querySelector('.total-workouts-value');
   #currentWorkoutType = 'running';
   #typeDependentInputs = new Map([
-    ['running', { name: 'cadence', input: this.#inputCadence }],
-    ['cycling', { name: 'elevationGain', input: this.#inputElevation }],
+    ['running', { name: 'cadence', unit: 'step/min' }],
+    ['cycling', { name: 'elevation', unit: 'meters' }],
   ]);
   #mapEvent;
 
   constructor() {
     this.#bindInputTypeChangeHandler(this.#onInputTypeChanged.bind(this));
-    console.log(this.#typeDependentInputs);
+    this.#onInputTypeChanged();
   }
 
   setTotalWorkoutsValue(value) {
@@ -33,29 +33,20 @@ class WorkoutsView {
   }
 
   hideForm() {
-    this.#inputDistance.value =
-      this.#inputCadence.value =
-      this.#inputDuration.value =
-      this.#inputElevation.value =
-        '';
+    this.#form.reset();
     this.#form.style.display = 'none';
     this.#form.classList.add('hidden');
-
     setTimeout(() => (this.#form.style.display = 'grid'), 1000);
   }
 
   getFormValues() {
-    const typeDependentInput = this.#typeDependentInputs.get(
-      this.#currentWorkoutType
-    );
-
     return {
       type: this.#inputType.value,
       values: {
-        distance: parseInt(this.#inputDistance.value),
-        duration: parseInt(this.#inputDuration.value),
+        distance: this.#inputDistance.value,
+        duration: this.#inputDuration.value,
         coords: [this.#mapEvent.latlng.lat, this.#mapEvent.latlng.lng],
-        [typeDependentInput.name]: parseInt(typeDependentInput.input.value),
+        [this.#changableInput.name]: this.#changableInput.value,
       },
     };
   }
@@ -63,11 +54,9 @@ class WorkoutsView {
   #isValidFormInputs(...inputs) {
     return inputs
       .filter((input) => typeof input !== 'object')
-      .every((input) => {
-        if (typeof input !== 'object') {
-          return Number.isFinite(input) && input > 0;
-        }
-      });
+      .every(
+        (input) => Number.isFinite(parseInt(input)) && parseInt(input) > 0
+      );
   }
 
   #bindInputTypeChangeHandler(handler) {
@@ -76,12 +65,14 @@ class WorkoutsView {
 
   #onInputTypeChanged() {
     this.#currentWorkoutType = this.#inputType.value;
-    this.#inputElevation
-      .closest('.form__row')
-      .classList.toggle('form__row--hidden');
-    this.#inputCadence
-      .closest('.form__row')
-      .classList.toggle('form__row--hidden');
+    const typeDependentInput = this.#typeDependentInputs.get(
+      this.#currentWorkoutType
+    );
+    this.#changableInput.name = typeDependentInput.name;
+    this.#changableInput.placeholder = typeDependentInput.unit;
+    this.#changableInputLabel.textContent =
+      typeDependentInput.name[0].toUpperCase() +
+      typeDependentInput.name.slice(1);
   }
 
   renderWorkout(workout) {
@@ -112,7 +103,8 @@ class WorkoutsView {
   binOnFormSubmitHandler(handler) {
     this.#form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const inputs = Object.values(this.getFormValues().values);
+      const formValues = this.getFormValues();
+      const inputs = Object.values(formValues.values);
       if (!this.#isValidFormInputs(...inputs)) {
         AlertView.show(
           'Make sure that you entered correct values',
@@ -120,7 +112,7 @@ class WorkoutsView {
         );
         return;
       }
-      handler(this.getFormValues());
+      handler(formValues);
     });
   }
 
@@ -164,7 +156,7 @@ class WorkoutsView {
       </div>
       <div class="workout__details">
         <span class="workout__icon">⛰</span>
-        <span class="workout__value">${workout.elevationGain}</span>
+        <span class="workout__value">${workout.elevation}</span>
         <span class="workout__unit">m</span>
       </div>
     </li>`

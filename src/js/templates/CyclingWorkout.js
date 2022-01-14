@@ -5,13 +5,15 @@ export class CyclingWorkout extends Workout {
 
   constructor(props) {
     super(props);
-    this.elevationGain = props.elevationGain;
+    this.elevation = props.elevation;
     this.#calcSpeed();
     this.setDesciption();
   }
 
   #calcSpeed() {
-    this.speed = this.distance / (this.duration / 60);
+    const distanceInt = parseInt(this.distance);
+    const durationInt = parseInt(this.duration);
+    this.speed = distanceInt / (durationInt / 60);
     return this.speed;
   }
 }

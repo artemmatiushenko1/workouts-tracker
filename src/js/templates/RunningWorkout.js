@@ -11,7 +11,9 @@ export class RunningWorkout extends Workout {
   }
 
   #calcPace() {
-    this.pace = this.duration / this.distance;
+    const durationInt = parseInt(this.duration);
+    const distanceInt = parseInt(this.distance);
+    this.pace = durationInt / distanceInt;
     return this.pace;
   }
 }
