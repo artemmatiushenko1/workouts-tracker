@@ -1,5 +1,5 @@
 import AlertView from './AlertView.js';
-import { AlertView as AlertViewClass } from './AlertView.js';
+import { DURATION_MEDIUM } from '../constants/index.js';
 
 class WorkoutsView {
   #form = document.querySelector('.form');
@@ -108,7 +108,7 @@ class WorkoutsView {
       if (!this.#isValidFormInputs(...inputs)) {
         AlertView.show(
           'Make sure that you entered correct values',
-          AlertViewClass.DURATION_MEDIUM
+          DURATION_MEDIUM
         );
         return;
       }

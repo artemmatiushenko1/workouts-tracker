@@ -1,6 +1,6 @@
-import WorkoutManager from './templates/WorkoutManager.js';
+import WorkoutManager from '../helpers/WorkoutManager.js';
 
-export class Model {
+class Model {
   #workouts = [];
 
   constructor() {
@@ -55,3 +55,5 @@ export class Model {
     this.#workouts = data;
   }
 }
+
+export default Model;

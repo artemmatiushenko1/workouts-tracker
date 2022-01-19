@@ -1,6 +1,6 @@
-import { Workout } from './Workout.js';
+import Workout from './Workout.js';
 
-export class CyclingWorkout extends Workout {
+class CyclingWorkout extends Workout {
   type = 'cycling';
 
   constructor(props) {
@@ -17,3 +17,5 @@ export class CyclingWorkout extends Workout {
     return this.speed;
   }
 }
+
+export default CyclingWorkout;

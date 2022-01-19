@@ -1,8 +1,5 @@
-export class AlertView {
+class AlertView {
   #alert = document.querySelector('.alert');
-  static DURATION_SHORT = 1000;
-  static DURATION_MEDIUM = 3000;
-  static DURATION_LONG = 6000;
 
   show(message, duration) {
     this.#alert.innerHTML = `<strong>Error!</strong> ${message}`;

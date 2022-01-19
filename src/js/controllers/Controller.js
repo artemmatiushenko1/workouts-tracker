@@ -1,31 +1,9 @@
-/* eslint-disable no-unused-vars */
-import MapView from './views/MapView.js';
-import WorkoutsView from './views/WorkoutsView.js';
-import AlertView from './views/AlertView.js';
-import { AlertView as AlertViewClass } from './views/AlertView.js';
-import { Model } from './Model.js';
+import { WorkoutsView, MapView, AlertView } from '../views/index.js';
+import { DURATION_LONG } from '../constants/index.js';
+import Model from '../store/Model.js';
 
 class Controller {
   #model = new Model();
-
-  constructor() {
-    this.#model
-      .getPosition()
-      .then((position) => {
-        MapView.loadMap(position, this.onMapClickHandler);
-        MapView.bindOnMapClickHandler(this.onMapClickHandler);
-        this.initSavedWorkouts();
-      })
-      .catch(this.onGetLocationFail);
-    WorkoutsView.setTotalWorkoutsValue(this.#model.workoutsCount);
-    WorkoutsView.binOnFormSubmitHandler(this.onFormSubmitHandler.bind(this));
-    WorkoutsView.bindOnWorkoutClickHandler(
-      this.onWorkoutClickHandler.bind(this)
-    );
-    WorkoutsView.bindOnWorkoutDeleteHandler(
-      this.onWorkoutDeleteHandler.bind(this)
-    );
-  }
 
   onMapClickHandler(mapEvent) {
     WorkoutsView.showForm(mapEvent);
@@ -61,9 +39,28 @@ class Controller {
   onGetLocationFail() {
     AlertView.show(
       'You should turn on location in order to have the app working',
-      AlertViewClass.DURATION_LONG
+      DURATION_LONG
+    );
+  }
+
+  init() {
+    this.#model
+      .getPosition()
+      .then((position) => {
+        MapView.loadMap(position, this.onMapClickHandler);
+        MapView.bindOnMapClickHandler(this.onMapClickHandler);
+        this.initSavedWorkouts();
+      })
+      .catch(this.onGetLocationFail);
+    WorkoutsView.setTotalWorkoutsValue(this.#model.workoutsCount);
+    WorkoutsView.binOnFormSubmitHandler(this.onFormSubmitHandler.bind(this));
+    WorkoutsView.bindOnWorkoutClickHandler(
+      this.onWorkoutClickHandler.bind(this)
+    );
+    WorkoutsView.bindOnWorkoutDeleteHandler(
+      this.onWorkoutDeleteHandler.bind(this)
     );
   }
 }
 
-const controller = new Controller();
+export default Controller;

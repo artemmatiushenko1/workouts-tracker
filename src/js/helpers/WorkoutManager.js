@@ -1,7 +1,6 @@
-import { CyclingWorkout } from './CyclingWorkout.js';
-import { RunningWorkout } from './RunningWorkout.js';
+import { CyclingWorkout, RunningWorkout } from '../models/index.js';
 
-export class WorkoutManager {
+class WorkoutManager {
   #workoutTypes = {
     cycling: CyclingWorkout,
     running: RunningWorkout,

@@ -1,4 +1,4 @@
-export class Workout {
+class Workout {
   date = new Date();
   id = (Date.now() + '').slice(-10);
 
@@ -28,3 +28,5 @@ export class Workout {
     } ${this.date.getDate()}`;
   }
 }
+
+export default Workout;
